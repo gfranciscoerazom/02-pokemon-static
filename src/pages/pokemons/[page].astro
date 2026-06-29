@@ -1,0 +1,41 @@
+---
+import type { GetStaticPaths } from "astro";
+import PokemonCard from "../../components/pokemons/PokemonCard.astro";
+import MainLayout from "../../layouts/MainLayout.astro";
+import type { PokemonListResponse } from "../../types/pokemons-list.response";
+
+export const getStaticPaths = (async ({ paginate }) => {
+	const resp = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
+	const { results } = (await resp.json()) as PokemonListResponse;
+
+	return paginate(results, { pageSize: 20 });
+}) satisfies GetStaticPaths;
+
+const title = "Pokemon Static | Home";
+const { page } = Astro.props;
+---
+
+<MainLayout title={title}>
+	<h1 class="text-3xl">Listado de Pokémons</h1>
+	<hr />
+	<section
+		aria-label="Listado de Pokémons"
+		class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-5 gap-4 mt-5"
+	>
+		{
+			page.data.map((pokemon) => (
+				<PokemonCard name={pokemon.name} url={pokemon.url} />
+			))
+		}
+	</section>
+	<section class="flex mt-10 gap-2 items-center">
+		<a href={page.url.prev} class="bg-blue-500 p-2 text-white rounded-md"
+			>Anteriores</a
+		>
+		<a href={page.url.next} class="bg-blue-500 p-2 text-white rounded-md"
+			>Siguientes</a
+		>
+		<div class="flex flex-1"></div>
+		<span>Página 1</span>
+	</section>
+</MainLayout>
