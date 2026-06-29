@@ -26,9 +26,10 @@ const imageSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
     ]}
 >
     <img
+        transition:name={`${name}-image`}
         src={imageSrc}
         alt={name}
-        class:list={[isBig ? "w-46 h-46" : "w-16 h-16"]}
+        class:list={[isBig ? "w-46 h-46" : "w-22 h-22"]}
     />
     <span class:list={["capitalize", { "text-3xl": isBig }]}>#{id} {name}</span>
 </a>
