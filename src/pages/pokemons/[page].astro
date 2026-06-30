@@ -29,13 +29,25 @@ const { page } = Astro.props;
 		}
 	</section>
 	<section class="flex mt-10 gap-2 items-center">
-		<a href={page.url.prev} class="bg-blue-500 p-2 text-white rounded-md"
-			>Anteriores</a
+		<a
+			href={page.url.prev}
+			class:list={[
+				"bg-blue-500 p-2 text-white rounded-md",
+				{
+					"bg-gray-600 text-gray-400": !page.url.prev,
+				},
+			]}>Anteriores</a
 		>
-		<a href={page.url.next} class="bg-blue-500 p-2 text-white rounded-md"
-			>Siguientes</a
+		<a
+			href={page.url.next}
+			class:list={[
+				"bg-blue-500 p-2 text-white rounded-md",
+				{
+					"bg-gray-600 text-gray-400": !page.url.next,
+				},
+			]}>Siguientes</a
 		>
 		<div class="flex flex-1"></div>
-		<span>Página 1</span>
+		<span class="text-xl font-bold">Página {page.currentPage}</span>
 	</section>
 </MainLayout>
