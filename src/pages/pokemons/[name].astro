@@ -66,15 +66,12 @@ const imageSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
 </MainLayout>
 
 <script>
-    type favoritePokemon = {
-        name: string;
-        id: string;
-    };
+    import type { FavoritePokemon } from "../../types/favorite-pokemon";
 
     const handlePageLoad = () => {
-        let favoritePokemons: favoritePokemon[] = JSON.parse(
+        let favoritePokemons: FavoritePokemon[] = JSON.parse(
             localStorage.getItem("favorites") ?? "[]",
-        ) as favoritePokemon[];
+        ) as FavoritePokemon[];
 
         const btnFavorite = document.querySelector(
             "#btn-favorite",
@@ -108,7 +105,7 @@ const imageSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
                     (fav) => fav.name !== name,
                 );
             } else {
-                favoritePokemons.push({ id, name });
+                favoritePokemons.push({ id: parseInt(id), name });
             }
 
             localStorage.setItem("favorites", JSON.stringify(favoritePokemons));
